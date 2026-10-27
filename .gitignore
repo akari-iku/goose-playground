@@ -1,0 +1,28 @@
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Private working area (drafts, raw logs, personal notes)
+private/
+
+# Downloaded Goose toolchain (unpacked release archives)
+tools/
+
+# Build outputs from `goose build`
+*.exe
+*.obj
+*.pdb
+*.ilk
+experiments/**/*.c
+
+# Local agent / planning files
+CLAUDE.md
+CLAUDE.local.md
+.claude/
+.plan/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
