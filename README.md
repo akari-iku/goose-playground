@@ -18,6 +18,7 @@ Goose は、ヒープアロケーター・GC・参照カウント・ライフタ
 | [experiments/02_clear_while_sliced.goose](experiments/02_clear_while_sliced.goose) | スライスが生きている間に配列を clear する | コンパイルエラー（§5.1） |
 | [experiments/03_stable_ref_ok.goose](experiments/03_stable_ref_ok.goose) | 10万回 push したあとも最初の参照が有効か | 有効 |
 | [experiments/04_pool_stale_ref.goose](experiments/04_pool_stale_ref.goose) | reusable pool の解放済みスロットを参照し続ける | コンパイルは通り、次の所有者の値を読む |
+| [experiments/svg-lsystem/](experiments/svg-lsystem/) | 同じ L-system → SVG レンダラーを Goose・Rust・C++ で書く | 4プリセットで出力がバイト一致。構文の対応表と計測は [notes/02](notes/02-lsystem-in-three-languages.md) |
 
 詳しい出力と気づきは [notes/](notes/) にあります。
 
