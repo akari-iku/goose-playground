@@ -19,6 +19,7 @@ Goose は、ヒープアロケーター・GC・参照カウント・ライフタ
 | [experiments/03_stable_ref_ok.goose](experiments/03_stable_ref_ok.goose) | 10万回 push したあとも最初の参照が有効か | 有効 |
 | [experiments/04_pool_stale_ref.goose](experiments/04_pool_stale_ref.goose) | reusable pool の解放済みスロットを参照し続ける | コンパイルは通り、次の所有者の値を読む |
 | [experiments/svg-lsystem/](experiments/svg-lsystem/) | 同じ L-system → SVG レンダラーを Goose・Rust・C++ で書く | 4プリセットで出力がバイト一致。構文の対応表と計測は [notes/02](notes/02-lsystem-in-three-languages.md) |
+| [experiments/save-data/](experiments/save-data/) | セーブデータを `to_bytes` / `from_bytes` で保存・復元し、C++ の手書きシリアライザと比べる | シリアライザなしで往復。壊したリンクは拒否、壊したデータは受理。詳細は [notes/03](notes/03-save-file-without-a-serializer.md) |
 
 詳しい出力と気づきは [notes/](notes/) にあります。
 
