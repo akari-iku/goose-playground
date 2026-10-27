@@ -50,7 +50,7 @@ L-system（文字列書き換え → タートルグラフィックス）で図�
 | 書いたもの | エラー | 正しい書き方 |
 |---|---|---|
 | `'+' => t.heading += p.angle,` | `expected '}' in match expression, found '+='` | `'+' => { t.heading += p.angle; },` |
-| `let pad = 10.0;` | `expected identifier in variable declaration, found 'pad'` | `pad` は予約語。`margin` に変更 |
+| `let pad = 10.0;` | `expected identifier in variable declaration, found 'pad'` | `pad` は構造体のパディング用キーワード（`struct Hdr { magic: u8[4], pad, size: u32 }`、reference.md §struct）。`margin` に変更 |
 | `for depth { ... }` | `expected 'in' in for statement, found '{'` | `for _ in depth { ... }` |
 
 Rust 側では `let (mut minx, ...) = (1.0e300, ...)` に `.min()` を呼ぶと型が曖昧（E0689）になり、`(f64, f64, f64, f64)` の注釈が必要でした。Goose は同じ書き方で `f64` に決まりました。
