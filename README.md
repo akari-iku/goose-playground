@@ -1,7 +1,6 @@
 # goose-playground
 
-システムプログラミング言語 [Goose](https://aardappel.github.io/goose/) を触って、言語仕様と実際の挙動を確かめるための実験リポジトリです。
-記事を書くための検証にも使います。
+システムプログラミング言語 [Goose](https://aardappel.github.io/goose/) の言語仕様と実際の挙動を、小さなプログラムで確かめた実験リポジトリです。
 
 - 公式ページ: https://aardappel.github.io/goose/
 - GitHub: https://github.com/aardappel/goose
@@ -10,7 +9,7 @@
 Goose は、ヒープアロケーター・GC・参照カウント・ライフタイム注釈のどれも持たないメモリ安全な言語です。
 コンパイラは参照の root（寿命を決める変数）を推論し、所有者より長く生きる参照をコンパイルエラーにします。
 
-## 試したこと
+## 実験
 
 | ファイル | 内容 | 結果 |
 |---|---|---|
@@ -21,15 +20,15 @@ Goose は、ヒープアロケーター・GC・参照カウント・ライフタ
 | [experiments/svg-lsystem/](experiments/svg-lsystem/) | 同じ L-system → SVG レンダラーを Goose・Rust・C++ で書く | 4プリセットで出力がバイト一致。構文の対応表と計測は [notes/02](notes/02-lsystem-in-three-languages.md) |
 | [experiments/save-data/](experiments/save-data/) | セーブデータを `to_bytes` / `from_bytes` で保存・復元し、C++ の手書きシリアライザと比べる | シリアライザなしで往復。壊したリンクは拒否、壊したデータは受理。詳細は [notes/03](notes/03-save-file-without-a-serializer.md) |
 
-詳しい出力と気づきは [notes/](notes/) にあります。
+実行結果とエラー出力は [notes/](notes/) にあります。
 
 ## ディレクトリ構成
 
 | パス | 内容 |
 |---|---|
-| `experiments/` | 自分で書いた `.goose` ファイルと、比較用の Rust / C++ |
+| `experiments/` | Goose のプログラムと、比較用の Rust / C++ |
 | `notes/` | 検証メモ（実行結果、エラー出力、計測） |
-| `tools/` | ダウンロードした Goose 本体の展開先（各自で用意） |
+| `tools/` | Goose 本体の展開先 |
 
 ## セットアップ
 
