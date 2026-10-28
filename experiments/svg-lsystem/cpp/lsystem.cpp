@@ -75,10 +75,26 @@ static void bounds(const std::vector<Segment>& segs, double& minx, double& miny,
     }
 }
 
+// Fixed two decimals, rounded half up, written digit by digit. This is what
+// Goose's format_flt does; the snprintf("%.2f") it replaces was the slowest
+// part of the whole program on MSVC. Build with -DUSE_SNPRINTF to compare.
 static void append_flt(std::string& out, double v) {
+#ifdef USE_SNPRINTF
     char buf[64];
     std::snprintf(buf, sizeof buf, "%.2f", v);
     out.append(buf);
+#else
+    if (v < 0) { out.push_back('-'); v = -v; }
+    unsigned long long scaled = (unsigned long long)(v * 100.0 + 0.5);
+    unsigned long long ip = scaled / 100, fp = scaled % 100;
+    char buf[24];
+    int n = 0;
+    do { buf[n++] = (char)('0' + ip % 10); ip /= 10; } while (ip);
+    while (n) out.push_back(buf[--n]);
+    out.push_back('.');
+    out.push_back((char)('0' + fp / 10));
+    out.push_back((char)('0' + fp % 10));
+#endif
 }
 
 static void write_svg(const std::vector<Segment>& segs, std::string& out) {

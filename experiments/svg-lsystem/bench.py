@@ -60,10 +60,14 @@ def main() -> None:
             print(f"{name:6s} (not built: {exe.relative_to(HERE)})")
             continue
         times, peaks = [], []
-        for _ in range(runs):
-            t, peak = run_once(exe, [preset, depth, str(out / f"{preset}.{name}.svg")])
-            times.append(t)
-            peaks.append(peak)
+        try:
+            for _ in range(runs):
+                t, peak = run_once(exe, [preset, depth, str(out / f"{preset}.{name}.svg")])
+                times.append(t)
+                peaks.append(peak)
+        except OSError as e:
+            print(f"{name:6s} (could not run: {e})")
+            continue
         times.sort()
         print(f"{name:6s} {times[0] * 1000:7.1f} ms  {times[len(times) // 2] * 1000:7.1f} ms  {max(peaks) / 1024:9.0f} KB")
 

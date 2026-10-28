@@ -93,17 +93,54 @@ fn bounds(segs: &[Segment]) -> (f64, f64, f64, f64) {
     (minx, miny, maxx, maxy)
 }
 
+// Fixed two decimals, rounded half up, written digit by digit: the same job
+// as Goose's format_flt. The `{:.2}` formatting it replaces was the slowest
+// part of the program. Build with `--features fmt` to compare.
+fn append_flt(out: &mut String, mut v: f64) {
+    if cfg!(feature = "fmt") {
+        write!(out, "{:.2}", v).unwrap();
+        return;
+    }
+    if v < 0.0 {
+        out.push('-');
+        v = -v;
+    }
+    let scaled = (v * 100.0 + 0.5) as u64;
+    let (mut ip, fp) = (scaled / 100, scaled % 100);
+    let mut buf = [0u8; 24];
+    let mut n = 0;
+    loop {
+        buf[n] = b'0' + (ip % 10) as u8;
+        n += 1;
+        ip /= 10;
+        if ip == 0 {
+            break;
+        }
+    }
+    while n > 0 {
+        n -= 1;
+        out.push(buf[n] as char);
+    }
+    out.push('.');
+    out.push((b'0' + (fp / 10) as u8) as char);
+    out.push((b'0' + (fp % 10) as u8) as char);
+}
+
 fn write_svg(segs: &[Segment], out: &mut String) {
     let (minx, miny, maxx, maxy) = bounds(segs);
     let margin = 10.0;
-    write!(out, "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"{:.2} {:.2} {:.2} {:.2}\">\n",
-           minx - margin, miny - margin, maxx - minx + margin * 2.0, maxy - miny + margin * 2.0).unwrap();
-    out.push_str("<path fill=\"none\" stroke=\"#2a7\" stroke-width=\"1\" d=\"");
+    out.push_str("<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"");
+    append_flt(out, minx - margin); out.push(' ');
+    append_flt(out, miny - margin); out.push(' ');
+    append_flt(out, maxx - minx + margin * 2.0); out.push(' ');
+    append_flt(out, maxy - miny + margin * 2.0);
+    out.push_str("\">\n<path fill=\"none\" stroke=\"#2a7\" stroke-width=\"1\" d=\"");
     for (i, s) in segs.iter().enumerate() {
         if i > 0 {
             out.push('\n');
         }
-        write!(out, "M{:.2} {:.2}L{:.2} {:.2}", s.x1, s.y1, s.x2, s.y2).unwrap();
+        out.push('M'); append_flt(out, s.x1); out.push(' '); append_flt(out, s.y1);
+        out.push('L'); append_flt(out, s.x2); out.push(' '); append_flt(out, s.y2);
     }
     out.push_str("\"/>\n</svg>\n");
 }

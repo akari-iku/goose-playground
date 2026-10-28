@@ -5,6 +5,9 @@ edition = "2021"
 
 [dependencies]
 
+[features]
+fmt = []
+
 [profile.release]
 opt-level = 3
 debug = false
