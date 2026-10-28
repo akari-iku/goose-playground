@@ -17,7 +17,11 @@ L-system（文字列書き換え → タートルグラフィックス）で図�
 
 3つのプログラムは構造を揃えて書いてあります。関数の分け方（`rewrite` → `interpret` → `bounds` → `write_svg`）と出力フォーマットが同じなので、4プリセットすべてで3言語の出力がバイト単位で一致しました（`cmp` で確認）。
 
-![plant depth 6](images/lsystem-plant-6.svg)
+Goose 版の出力（表示幅 280 px に縮めたもの）を `images/` に置いています。
+
+| plant 5 | koch 4 | dragon 10 | sierpinski 5 |
+|---|---|---|---|
+| ![plant](images/lsystem-plant-5.svg) | ![koch](images/lsystem-koch-4.svg) | ![dragon](images/lsystem-dragon-10.svg) | ![sierpinski](images/lsystem-sierpinski-5.svg) |
 
 ## 似ている部分、違う部分
 
